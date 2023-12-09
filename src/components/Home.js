@@ -2,7 +2,9 @@ import React, { Fragment, useEffect } from "react";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productsAction";
+import Loader from "./layout/Loader";
 import MetaData from "./layout/MetaData";
+import Product from "./product/Product";
 import Products from "./products/Products";
 
 
@@ -13,8 +15,7 @@ const Home = () => {
   const { products, loading, error } = useSelector((state) => state.products);
 
   const alert = useAlert();
-  console.log('error===>', error);
-
+  
   useEffect(()=> {
     if(error!= null)
     {

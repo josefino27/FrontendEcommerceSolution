@@ -10,7 +10,6 @@ const Product = ({ product, col }) => {
         <img
           className="card-img-top mx-auto"
           src={product.images[0] ? product.images[0].url : default_image }
-          alt={product.images[0].url}
         />
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">
@@ -23,7 +22,7 @@ const Product = ({ product, col }) => {
             <span id="no_of_reviews">( {product.numeroReviews} Reviews)</span>
           </div>
           <p className="card-text">$ {product.precio}</p>
-          <Link id="view_btn" className="btn btn-block" to={`/product/${product.id}`}>
+          <Link id="view_btn" className="btn btn-block"  to={`/product/${product.id}`}>
             Ver Detalles
           </Link>
         </div>

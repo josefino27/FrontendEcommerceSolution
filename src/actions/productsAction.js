@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from  '../Utilities/axios';
-import { delayedTimeout } from "../Utilities/delayedTimeout";
+import axios from  '../utilities/axios';
+import { delayedTimeout } from "../utilities/delayedTimeout";
 
 export const getProducts = createAsyncThunk(
     "products/getProducts",
@@ -20,7 +20,8 @@ export const getProductById = createAsyncThunk(
     "products/getProductId",
     async (id, {rejectWithValue}) => {
         try {
-            return await axios.get(`/api/v1/product/${id}`)
+            await delayedTimeout(1000);
+            return await axios.get(`/api/v1/product/${id}`);
         }catch(err)
         {
             return rejectWithValue(`Errores: ${err.message}`);
