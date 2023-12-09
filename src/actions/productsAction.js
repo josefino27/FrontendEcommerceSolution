@@ -32,16 +32,20 @@ export const getProductById = createAsyncThunk(
 
 export const getProductPagination = createAsyncThunk(
     "products/getProductPagination",
-    async(params, {rejectWithValue}) => {
-        try {
+    async(params, { rejectWithValue }) => {
+
+        try{
+            
             params = httpParams(params);
             const paramUrl = new URLSearchParams(params).toString();
+
             var results = axios.get(`api/v1/product/pagination?${paramUrl}`);
 
             return (await results).data;
-        }catch (err) 
+
+        }catch(err)
         {
             return rejectWithValue(`Errores: ${err.message}`);
         }
     }
-)
+);

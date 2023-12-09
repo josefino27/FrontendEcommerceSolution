@@ -1,20 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { getProductPagination } from "../actions/productsAction";
+import {createSlice} from '@reduxjs/toolkit';
+import { getProductPagination } from '../actions/productsAction';
 
 export const initialState = {
-    product: [],
-    count: 0,
-    pageIndex: 1,
-    pageSize: 2,
-    pageCount: 0,
-    loading: false,
-    resultByPage: 0,
-    error: null,
-    search: null,
-    precioMax: null,
-    precioMin: null,
-    category: null,
-    rating: null
+  products : [],
+  count: 0,
+  pageIndex: 1,
+  pageSize: 2,
+  pageCount: 0,
+  loading: false,
+  resultByPage: 0,
+  error: null,
+  search: null,
+  precioMax: null,
+  precioMin: null,
+  category: null,
+  rating: null
 }
 
 export const productPaginationSlice = createSlice({
@@ -31,8 +31,8 @@ export const productPaginationSlice = createSlice({
         },
 
         updatePrecio: (state, action) => {
-            state.precioMax = action.payload.precio(1);
-            state.precioMin = action.payload.precio(0);
+            state.precioMax = action.payload.precio[1];
+            state.precioMin = action.payload.precio[0];
         },
 
         resetPagination: (state, action) => {
@@ -46,21 +46,20 @@ export const productPaginationSlice = createSlice({
 
         updateCategory: (state, action) => {
             state.category = action.payload.category;
-
         },
 
-        updateRating: (state, action) => {
+        updateRating: (state, action)  => {
             state.rating = action.payload.rating;
-
         }
-
     },
+
     extraReducers: {
+
         [getProductPagination.pending]: (state) => {
             state.loading = true;
             state.error = null;
         },
-
+        
         [getProductPagination.fulfilled]: (state, {payload}) => {
             state.loading = false;
             state.products = payload.data;
@@ -79,13 +78,16 @@ export const productPaginationSlice = createSlice({
     },
 });
 
+
 export const {
-    searchPagination, 
-    setPageIndex, 
-    updatePrecio, 
-    resetPagination, 
-    updateCategory, 
-    updateRating
-    } = productPaginationSlice.actions;
+            searchPagination, 
+            setPageIndex, 
+            updatePrecio, 
+            resetPagination, 
+            updateCategory, 
+            updateRating
+            } = productPaginationSlice.actions;
+
 
 export const productPaginationReducer = productPaginationSlice.reducer;
+

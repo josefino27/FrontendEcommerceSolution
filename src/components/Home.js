@@ -7,24 +7,24 @@ import MetaData from "./layout/MetaData";
 import Product from "./product/Product";
 import Products from "./products/Products";
 import Pagination from "react-js-pagination";
-import { setPageIndex, updatePrecio } from "../slices/productPaginationSlice";
+import {setPageIndex, updatePrecio} from "../slices/productPaginationSlice";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
 const { createSliderWithTooltip } = Slider;
-const Range = createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
+
 
 const Home = () => {
-  const [precio, setPrecio] = useState([1, 10000]);
+  const [precio, setPrecio] = useState([1,10000]);
   const dispatch = useDispatch();
 
   //const { products, loading, error } = useSelector((state) => state.products);
-
   const {
     products,
     count,
     pageIndex,
-    loading,
+    loading, 
     error,
     resultByPage,
     search,
@@ -32,13 +32,19 @@ const Home = () => {
     precioMax,
     precioMin,
     category,
-    rating,
-  } = useSelector((state) => state.productPagination);
+    rating
+  }  = useSelector((state)=> state.productPagination);
+
+
+
+
+
 
   const alert = useAlert();
-
-  useEffect(() => {
-    if (error != null) {
+  
+  useEffect(()=> {
+    if(error!= null)
+    {
       return alert.error(error);
     }
 
@@ -53,79 +59,101 @@ const Home = () => {
         rating: rating,
       })
     );
+   
+
+
   }, [
-    dispatch,
-    error,
-    alert,
-    search,
-    pageSize,
-    pageIndex,
-    precioMax,
-    precioMin,
-    category,
-    rating,
+      dispatch,
+      error,
+      alert,
+      search,
+      pageSize,
+      pageIndex,
+      precioMax,
+      precioMin,
+      category,
+      rating
   ]);
 
-  function setCurrentPageNo(pageNumber) {
-    dispatch(setPageIndex({ pageIndex: pageNumber }));
+
+  function setCurrentPageNo(pageNumber)
+  {
+    dispatch(setPageIndex({pageIndex: pageNumber}));
   }
 
-  function onChangePrecio(precioEvent) {
-    setPrecio(precioEvent);
+  function onChangePrecio(precioEvent){
+    setPrecio(precioEvent)
   }
 
   function onAfterChange(precioEvent) {
-    dispatch(updatePrecio({ precio: precioEvent }));
+    dispatch(updatePrecio({precio: precioEvent}));
   }
+
 
   return (
     <Fragment>
-      <MetaData titulo={"Los mejores productos online"} />
+      <MetaData titulo={'Los mejores productos online'} />
       <section id="products" className="container mt-5">
         <div className="row">
-          {search ? (
+
+        {
+        search 
+          ? (
             <React.Fragment>
               <div className="col-6 col-md-3 mt-5 mb-5">
-                <div className="px-5">
-                  <Range
-                    marks={{ 1: "$1", 10000: "$10000" }}
-                    min={1}
-                    max={10000}
-                    defaultValue={[1, 10000]}
-                    tipoFormatter={(value) => `$${value}}`}
-                    value={precio}
-                    tipProps={{ placement: "top", visible: true }}
-                    onChange={onChangePrecio}
-                    onAfterChange={onAfterChange}
-                  />
-                </div>
-              </div>
+                  <div className="px-5">
+                      <Range
+                        marks={{ 1: `$1`, 10000: `$10000` }}
+                        min={1}
+                        max={10000}
+                        defaultValue={[1,10000]}
+                        tipFormatter={value => `$${value}`}
+                        value={precio}
+                        tipProps={{placement: "top", visible: true}}
+                        onChange={onChangePrecio}
+                        onAfterChange={onAfterChange}
+                      />
+                  </div>
+              </div> 
               <div className="col-6 col-md-9">
-                <div className="row">
-                  <Products col={4} products={products} loading={loading} />
-                </div>
-              </div>
+                  <div className="row">
+                    <Products col={4} products={products} loading={loading} /> 
+                  </div>
+              </div>  
             </React.Fragment>
-          ) : (
-            <Products col={4} products={products} loading={loading} />
-          )}
+          )
+          : <Products col={4} products={products} loading={loading} /> 
+        }
+
+
+
+
+
+          
+
+
+
+
         </div>
       </section>
 
       <div className="d-flex justify-content-center mt-5">
-        <Pagination
-          activePage={pageIndex}
-          itemsCountPerPage={pageSize}
-          totalItemsCount={count}
-          onChange={setCurrentPageNo}
-          nextPageText={">"}
-          prevPageText={"<"}
-          firstPageText={"<<"}
-          lastPageText={">>"}
-          item-class="page-item"
-          linkClass="page-link"
-        />
+          <Pagination 
+            activePage={pageIndex}
+            itemsCountPerPage={pageSize}
+            totalItemsCount={count}
+            onChange={setCurrentPageNo}
+            nextPageText={">"}
+            prevPageText={"<"}
+            firstPageText={"<<"}
+            lastPageText={">>"}
+            item-class="page-item"
+            linkClass="page-link"
+          />
       </div>
+
+
+
     </Fragment>
   );
 };
