@@ -1,15 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react";
-import Metadata from "../layout/MetaData";
+import React, { useEffect, useState, Fragment }  from "react";
+import MetaData from "../layout/MetaData";
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { register } from "../../actions/userAction";
+
 
 const Register = () => {
     const navigate = useNavigate();
-    const alert = useAlert();
-    const dispatch = useDispatch();
-
     const [user, setUser] = useState({
         nombre: "",
         apellido: "",
@@ -19,76 +17,89 @@ const Register = () => {
         password: ""
     });
 
-    const {nombre, apellido, email, telefono, username, password} = user;
+  const {nombre, apellido, password, telefono, email, username} = user;
 
-    const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("");
 
-    const [avatarPreview, setAvatarPreview] = useState(
-        "images/default_avatar.jpg"
-    );
+  const [avatarPreview, setAvatarPreview] = useState(
+    "images/default_avatar.jpg"
+  );
 
-    
 
-    const {errores, isAuthenticated, loading} = useSelector( state => state.security);
+  const alert = useAlert();
+  const dispatch = useDispatch();
+
+  const { errores, isAuthenticated, loading }  = useSelector(state => state.security);
 
     useEffect(() => {
         if(isAuthenticated)
         {
             navigate("/");
         }
+
         if(errores)
         {
             errores.map(error => alert.error(error));
+
         }
-    },[dispatch, alert, isAuthenticated, errores, navigate]);
 
-    const submitHandler = (e) => {
-        e.preventDefault();
+    }, [dispatch, alert, isAuthenticated, errores, navigate]);
 
-        const formData = new FormData();
-        formData.set("nombre", nombre);
-        formData.set("apellido", apellido);
-        formData.set("telefono", telefono);
-        formData.set("email", email);
-        formData.set("username", username);
-        formData.set("password", password);
-        formData.set("foto", avatar);
+    
 
-        dispatch(register(formData));
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.set("nombre", nombre);
+    formData.set("apellido", apellido);
+    formData.set("telefono", telefono);
+    formData.set("email", email);
+    formData.set("username", username);
+    formData.set("password", password);
+    formData.set("foto", avatar);
+
+    dispatch(register(formData));
+  }
+
+  const onChange = (e) => {
+
+    if(e.target.name === "avatar")
+    {
+        const reader = new FileReader();
+        reader.onload = () => {
+            if(reader.readyState === 2){
+                setAvatarPreview(reader.result);
+                setAvatar(e.target.files[0]);
+            }
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    }
+    else{
+
+        setUser({...user, [e.target.name] : e.target.value })
     }
 
-    const onChange = (e) => {
-        if(e.target.name == "avatar")
-        {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if(reader.readyState === 2)
-                {
-                    setAvatarPreview(reader.result);
-                    setAvatar(e.target.files[0]);
-                }
-            };
 
-            reader.readAsDataURL(e.target.files[0]);
+  }
 
-        }else{
-            setUser({...user, [e.target.name] : e.target.vale })
-        }
-    }
+
 
   return (
     <Fragment>
-      <Metadata titulo={"Registro de usuario"} />
+      <MetaData titulo={"Registro de usuario"} />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" encType="multipart/form-data" onSubmit={submitHandler}>
             <h1 className="mb-3">Registrar Usuario</h1>
 
             <div className="form-group">
-              <label htmlFor="name_field">Nombre</label>
+              <label htmlFor="nombre_field">Nombre</label>
               <input
                 type="text"
-                id="name_field"
+                id="nombre_field"
                 className="form-control"
                 value={nombre}
                 name="nombre"
@@ -97,10 +108,10 @@ const Register = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="lastname_field">Apellido</label>
+              <label htmlFor="apellido_field">Apellido</label>
               <input
                 type="text"
-                id="lastname_field"
+                id="apellido_field"
                 className="form-control"
                 value={apellido}
                 name="apellido"
@@ -108,11 +119,12 @@ const Register = () => {
               />
             </div>
 
+
             <div className="form-group">
-              <label htmlFor="phone_field">Telefono</label>
+              <label htmlFor="telefono_field">Telefono</label>
               <input
                 type="text"
-                id="phone_field"
+                id="telefono_field"
                 className="form-control"
                 value={telefono}
                 name="telefono"
@@ -156,12 +168,15 @@ const Register = () => {
               />
             </div>
 
+
+            
+
             <div className="form-group">
               <label htmlFor="avatar_upload">Avatar</label>
               <div className="d-flex align-items-center">
                 <div>
                   <figure className="avatar mr-3 item-rtl">
-                    <img src={avatarPreview} className="rounded-circle" alt="imagen previa" />
+                    <img src={avatarPreview} className="rounded-circle" alt="Imagen Previa" />
                   </figure>
                 </div>
                 <div className="custom-file">
