@@ -10,6 +10,7 @@ const Header = () => {
   const { user, loading } = useSelector((state) => state.security);
   const dispatch = useDispatch();
   const alert = useAlert();
+
   const logoutHandler = () => {
     dispatch(logout());
     alert.success("Salio de sesion exitosamente");
@@ -47,7 +48,11 @@ const Header = () => {
                 aria-expanded="false"
               >
                 <figure className="avatar avatar-nav">
-                  <img src={user && user.avatar} alt={user && user.nombre} />
+                  <img
+                    src={user && user.avatar}
+                    alt={user && user.nombre}
+                    className="rounded-circle"
+                  />
                 </figure>
                 <span>{user && user.nombre}</span>
               </Link>
@@ -65,18 +70,26 @@ const Header = () => {
                 <Link className="dropdown-item" to="/orders/me">
                   Ordenes
                 </Link>
+
                 <Link className="dropdown-item" to="/me">
                   Perfil
                 </Link>
+
                 <Link className="dropdown-item" to="/" onClick={logoutHandler}>
-                  logout
+                  Logout
                 </Link>
               </div>
             </div>
           ) : (
+            
+            !loading &&
+            (
             <Link className="btn ml-4" id="login_btn" to="/login">
               Login
             </Link>
+            )
+
+
           )}
         </div>
       </nav>

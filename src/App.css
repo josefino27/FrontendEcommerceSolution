@@ -32,7 +32,7 @@ nav {
 }
 
 #search_btn {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
 }
 
 .input-group {
@@ -47,7 +47,7 @@ nav {
 
 #login_btn,
 #view_btn {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
   padding: 0.4rem 1.8rem;
   font-family: calibri;
 }
@@ -93,7 +93,7 @@ nav {
 }
 
 #view_btn {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
   color: white;
 }
 
@@ -247,7 +247,7 @@ footer {
 
 #checkout_btn,
 .review-btn {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
   border-color: #e3f90d;
   margin-top: 2rem;
   border-radius: 5rem;
@@ -307,7 +307,7 @@ footer {
 }
 
 .wrapper form .btn {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
   border-color: #e3f90d;
   color: white;
   margin-top: 2.5rem;
@@ -445,7 +445,7 @@ footer {
 }
 
 #edit_profile {
-  background-color: #e3f90d;
+  background-color: #b0c10b;
   border-color: #e3f90d;
 }
 
@@ -457,8 +457,8 @@ footer {
 }
 
 .update-btn {
-  background-color: #e3f90d;
-  border-color: #e3f90d;
+  background-color: #b0c10b;
+  border-color: #b0c10b;
   color: white;
 }
 

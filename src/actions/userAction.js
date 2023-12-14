@@ -64,7 +64,7 @@ export const update = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.post(
+      const { data } = await axios.put(
         `/api/v1/usuario/update`,
         params,
         requestConfig

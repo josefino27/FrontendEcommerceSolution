@@ -110,6 +110,7 @@ export const securitySlice = createSlice({
             state.loading = false;
             state.user = payload;
             state.errores = [];
+            state.isAuthenticated = true;
             state.direccionEnvio = payload.direccionEnvio;
         },
         [loadUser.rejected]: (state, action) => {

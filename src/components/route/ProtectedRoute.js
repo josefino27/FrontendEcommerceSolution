@@ -2,9 +2,10 @@ import { Navigate, Outlet } from "react-router-dom";
 import { parseToken } from "../../utilities/parseToken";
 
 
-const ProtectedRoute = ({existsRoles}) => {
-    const token = localStorage.getItem('token');
 
+const ProtectedRoute = ({existsRoles}) => {
+
+    const token = localStorage.getItem('token');
     if(!token)
     {
         return <Navigate to="/login" />;
@@ -15,7 +16,7 @@ const ProtectedRoute = ({existsRoles}) => {
         return <Outlet />;
     }
 
-    const payload = parseToken(token);
+    const payload = parseToken(token); // { 'nombre': 'vaxi', 'apellido': 'drez', 'role': []}
 
     const {role} = payload;
 
@@ -23,8 +24,8 @@ const ProtectedRoute = ({existsRoles}) => {
     {
         const isFounded = role.some(ai => existsRoles.includes(ai));
         return isFounded ? <Outlet /> : <Navigate to="/login" />;
-    }else {
-        return existsRoles.includes(role) ? <Outlet /> : <Navigate to="/login" />;
+    }else{
+        return existsRoles.includes(role) ? <Outlet /> : <Navigate to="/login" />
     }
 }
 
