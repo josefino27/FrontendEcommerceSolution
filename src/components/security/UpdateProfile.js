@@ -51,12 +51,12 @@ const UpdateProfile = () => {
       reader.onload = () => {
         if (reader.readyState === 2) {
           setAvatarPreview(reader.result);
-          setAvatar(e.target.file[0]);
+          setAvatar(e.target.files[0]);
         }
       };
-      reader.readAsDataURL(e.target.file[0]);
+      reader.readAsDataURL(e.target.files[0]);
     } else {
-      setUserSesion({ ...user, [e.target.name]: e.target.value });
+      setUserSesion({ ...userSesion, [e.target.name]: e.target.value });
     }
   };
 
@@ -75,16 +75,18 @@ const UpdateProfile = () => {
 
   }
 
+
+
   return (
     <Fragment>
-      <MetaData titulo={"Actualizar perfil"} />
+      <MetaData titulo={"Actualizar Perfil"} />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
-          <form className="shadow-lg" encType="multipart/form-data" onSubmit={submitHandler}>
+          <form className="shadow-lg" encType="multipart/form-data" onSubmit={submitHandler} >
             <h1 className="mt-2 mb-5">Actualizar Perfil</h1>
 
             <div className="form-group">
-              <label htmlFor="email_field">Nombre</label>
+              <label htmlFor="nombre_field">Nombre</label>
               <input
                 type="text"
                 id="nombre_field"
@@ -95,8 +97,9 @@ const UpdateProfile = () => {
               />
             </div>
 
+
             <div className="form-group">
-              <label htmlFor="email_field">Apellido</label>
+              <label htmlFor="apellido_field">Apellido</label>
               <input
                 type="text"
                 id="apellido_field"
@@ -107,8 +110,9 @@ const UpdateProfile = () => {
               />
             </div>
 
+
             <div className="form-group">
-              <label htmlFor="email_field">Telefono</label>
+              <label htmlFor="telefono_field">Telefono</label>
               <input
                 type="text"
                 id="telefono_field"
@@ -118,6 +122,7 @@ const UpdateProfile = () => {
                 onChange={onChange}
               />
             </div>
+
 
             <div className="form-group">
               <label htmlFor="avatar_upload">Avatar</label>
@@ -150,7 +155,7 @@ const UpdateProfile = () => {
             <button
               type="submit"
               className="btn update-btn btn-block mt-4 mb-3"
-              disabled = {loading ? true : false}
+              disabled={loading ? true : false}
             >
               Guardar
             </button>
