@@ -13,6 +13,9 @@ import Profile from "./components/security/Profile";
 import ProtectedRoute from "./components/route/ProtectedRoute";
 import { loadUser } from "./actions/userAction";
 import UpdateProfile from "./components/security/UpdateProfile";
+import ForgotPassword from "./components/security/ForgotPassword";
+import NewPassword from "./components/security/NewPassword";
+import UpdatePassword from "./components/security/UpdatePassword";
 
 function App() {
 
@@ -44,13 +47,19 @@ function App() {
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              
+              <Route path="/password/forgot" element={<ForgotPassword />} />
+              <Route path="/password/reset/:token" element={<NewPassword />} />
+
               <Route exact path="/me" element={<ProtectedRoute />}>
                 <Route path="/me" element={<Profile />} />
               </Route>
 
               <Route exact path="/me/update" element={<ProtectedRoute />}>
                 <Route path="/me/update" element={<UpdateProfile />} />
+              </Route>
+
+              <Route exact path="/password/update" element={<ProtectedRoute />}>
+                <Route path="/password/update" element={<UpdatePassword />} />
               </Route>
 
             </Routes>

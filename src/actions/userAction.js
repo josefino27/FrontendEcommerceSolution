@@ -105,7 +105,7 @@ export const updatePassword = createAsyncThunk(
         },
       };
 
-      const { data } = await axios.put(
+      const { data } = await axios.post(
         `/api/v1/usuario/updatepassword`,
         params,
         requestConfig
