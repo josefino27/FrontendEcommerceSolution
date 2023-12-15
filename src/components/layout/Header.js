@@ -7,7 +7,7 @@ import { logout } from "../../slices/securitySlice";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const { shoppinCartItems } = useSelector((state) => state.cart);
+  const { shoppingCartItems } = useSelector((state) => state.cart);
   const { user, loading } = useSelector((state) => state.security);
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -31,14 +31,15 @@ const Header = () => {
         <div className="col-12 col-md-6 mt-2 mt-md-0">
           <Search />
         </div>
-
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <span id="cart" className="ml-3">
-            Cart
-          </span>
-          <span className="ml-1" id="cart_count">
-            {shoppinCartItems.length}
-          </span>
+          <Link to="/cart">
+            <span id="cart" className="ml-3">
+              Cart
+            </span>
+            <span className="ml-1" id="cart_count">
+              {shoppingCartItems.length}
+            </span>
+          </Link>
 
           {user ? (
             <div className="ml-4 dropdown d-inline">

@@ -35,8 +35,8 @@ export const addItemShoppingCart = createAsyncThunk(
       if (indice === -1) {
         items.push(item);
       } else {
-        let cantidad = items[indice].cantidad;
-        var total = cantidad + cantidad;
+        let cantidad_ = items[indice].cantidad;
+        var total = cantidad_ + cantidad;
         let itemNewClone = { ...items[indice] };
         itemNewClone.cantidad = total;
         items[indice] = itemNewClone;
