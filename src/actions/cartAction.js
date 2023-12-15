@@ -1,112 +1,136 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../utilities/axios";
+import axios from '../utilities/axios';
 
 export const getShoppingCart = createAsyncThunk(
-  "shoppingCart/GetbyId",
-  async ({ rejectWithValue }) => {
-    try {
-      const shoppingCartId =
-        localStorage.getItem("shoppingCartId") ??
-        "00000000-0000-0000-0000-000000000000";
+    "shoppingCart/GetById",
+    async({rejectWithValue}) => {
 
-      const { data } = await axios.get(`/api/v1/shoppingCart/${shoppingCartId}`);
+        try{
+            
+ const shoppingCartId = localStorage.getItem("shoppingCartId") ?? '00000000-0000-0000-0000-000000000000';
 
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+        const {data}  = await axios.get(`/api/v1/ShoppingCart/${shoppingCartId}`);
+
+            return data;
+        }catch(err)
+        {
+            return rejectWithValue(err.response.data.message);
+
+        }
+
     }
-  }
 );
+
 
 export const addItemShoppingCart = createAsyncThunk(
-  "shoppingCart/update",
-  async (params, { rejectWithValue }) => {
-    try {
-      const { shoppingCartItems, item, cantidad } = params;
+    "shoppingCart/update",
+    async(params, {rejectWithValue}) => {
 
-      let items = [];
+        try{
+            const  { shoppingCartItems, item, cantidad} = params;
 
-      items = shoppingCartItems.slice();
+            let items = [];
 
-      const indice = shoppingCartItems.findIndex(
-        i => i.porductId === item.productId
-      );
+            items = shoppingCartItems.slice();
 
-      if (indice === -1) {
-        items.push(item);
-      } else {
-        let cantidad_ = items[indice].cantidad;
-        var total = cantidad_ + cantidad;
-        let itemNewClone = { ...items[indice] };
-        itemNewClone.cantidad = total;
-        items[indice] = itemNewClone;
-      }
+            const indice = shoppingCartItems.findIndex(i => i.productId === item.productId);
 
-      var request = {
-        shoppingCartItems: items,
-      };
+            if(indice === -1)
+            {
+                items.push(item);
+            }else{
+                let cantidad_ = items[indice].cantidad;
+                var total = cantidad_ + cantidad;
+                let itemNewClone = {...items[indice]};
+                itemNewClone.cantidad = total;
+                items[indice] = itemNewClone;
+            }
 
-      const requestConfig = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+            var request = {
+                shoppingCartItems: items
+            }
 
-      const { data } = await axios.put(
-        `/api/v1/ShoppingCart/${params.shoppingCartId}`,
-        request,
-        requestConfig
-      );
+            const requestConfig = {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }
 
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+            const {data} = await axios.put(
+                `/api/v1/ShoppingCart/${params.shoppingCartId}`,
+                request,
+                requestConfig
+            )
+
+            return data;
+        }
+        catch(err)
+        {
+            rejectWithValue(err.response.data.message);
+        }
+
+
     }
-  }
-);
+)
+
 
 export const removeItemShoppingCart = createAsyncThunk(
-  "shoppingCart/removeItem",
-  async (params, { rejectWithValue }) => {
-    try {
-      const requestConfig = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    "shoppingCart/removeItem",
+    async(params, { rejectWithValue }) => {
 
-      const { data } = axios.delete(
-        `/api/v1/ShoppingCart/item/${params.id}`,
-        params,
-        requestConfig
-      );
+        try{
+            const requestConfig = {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
 
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+            const {data} = await axios.delete(
+                `/api/v1/ShoppingCart/item/${params.id}`,
+                params,
+                requestConfig
+            );
+
+            return data;
+
+        }catch(err){
+
+            return rejectWithValue(err.response.data.message);
+        }
+
+
+
     }
-  }
-);
+)
+
+
+
+
+
 
 export const saveAddressInfo = createAsyncThunk(
-  "shoppingCart/saveAddressInfo",
-  async (params, { rejectWithValue }) => {
-    try {
-      const requestConfig = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+    "shoppingCart/saveAddressInfo",
+    async(params, {rejectWithValue}) => {
 
-      const { data } = await axios.post(
-        `/api/v1/order/address`,
-        params,
-        requestConfig
-      );
+        try {
+            const requestConfig = {
+                headers : {
+                    "Content-Type": "application/json",
+                }
+            };
 
-      return data;
-    } catch (err) {
-      return rejectWithValue(err.response.data.message);
+            const {data} = await axios.post(
+                `api/v1/order/address`,
+                params,
+                requestConfig
+            );
+
+            return data;
+        }catch(err)
+        {
+
+            return rejectWithValue(err.response.data.message);
+        }
+
     }
-  }
-);
+)

@@ -1,51 +1,91 @@
 import React, { Fragment } from "react";
-import MetaData from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import MetaData from "../layout/MetaData";
+import { addItemShoppingCart, removeItemShoppingCart } from "../../actions/cartAction";
 
 const Cart = () => {
-    const { shoppingCartItems, shoppingCartId, total, cantidad } = useSelector(
-      (state) => state.cart
-    );
+  const { shoppingCartItems, shoppingCartId, total, cantidad } = useSelector(
+    (state) => state.cart
+  );
+  const { isAuthenticated } = useSelector((state) => state.security);
 
-    const { isAuthenticated } = useSelector((state) => state.security);
-
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
-  const increaseQty = (item) => {
+    const increaseQty = (item) => {
+        const nuevoItem = {...item};
 
-  }
-  const decreaseQty = (item) => {
+        const nuevoCantidadItem = item.cantidad + 1;
+        if(nuevoCantidadItem > item.stock) return;
 
-  }
+        nuevoItem.cantidad = nuevoCantidadItem;
 
-  const removeCartItemhandler = (item) => {
+        let params = {
+            cantidad: 1,
+            productId: item.productId,
+            shoppingCartItems,
+            shoppingCartId,
+            item: nuevoItem
+        };
 
-  }
+        dispatch(addItemShoppingCart(params));
+    }
+
+    const decreaseQty = (item) => {
+        const nuevoItem = {...item};
+        
+        const cantidad = nuevoItem.cantidad  - 1;
+
+        if(cantidad <= 0) return;
+
+        let params = {
+            cantidad: -1,
+            productId: item.productId,
+            shoppingCartItems,
+            shoppingCartId,
+            item: nuevoItem
+        };
+
+        dispatch(addItemShoppingCart(params));
+
+
+
+    }
+
+    const removeCartItemHandler = (item) => {
+
+        const request = {
+            id: item.id
+        }
+
+        dispatch(removeItemShoppingCart(request));
+
+    }
 
 
   return (
     <Fragment>
-      <MetaData titulo={"Tu carrito de compras"} />
+      <MetaData title={"Tu Carrito de Compras"} />
+
       {shoppingCartItems.length === 0 ? (
-        <h2 className="mt-5">Tu carrito de compras esta vacio</h2>
+        <h2 className="mt-5">Tu Carrito de Compras esta vacio</h2>
       ) : (
         <Fragment>
           <h2 className="mt-5">
-            Tu carrito tiene: <b>{shoppingCartItems.length} items</b>
+            Tu Carrito tiene: <b> {shoppingCartItems.length} items</b>
           </h2>
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8">
               {shoppingCartItems.map((item) => (
-                <Fragment key={item.productId}>
+                <Fragment  key={item.productId}>
                   <hr />
                   <div className="cart-item">
                     <div className="row">
                       <div className="col-4 col-lg-3">
                         <img
-                          src={item.image}
+                          src={item.imagen}
                           alt={item.producto}
                           height="90"
                           width="115"
@@ -53,7 +93,7 @@ const Cart = () => {
                       </div>
 
                       <div className="col-5 col-lg-3">
-                        <Link to={`/product/${item.productId}`}>{item.producto}</Link>
+                        <Link to={`/product/${item.productId}`} >{item.producto}</Link>
                       </div>
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -78,7 +118,7 @@ const Cart = () => {
                         <i
                           id="delete_cart_item"
                           className="fa fa-trash btn btn-danger"
-                          onClick={()=>removeCartItemhandler(item)}
+                          onClick={()=> removeCartItemHandler(item)}
                         ></i>
                       </div>
                     </div>
@@ -90,15 +130,15 @@ const Cart = () => {
 
             <div className="col-12 col-lg-3 my-4">
               <div id="order_summary">
-                <h4>Orden de compra</h4>
+                <h4>Order de Compra</h4>
                 <hr />
                 <p>
                   Subtotal:{" "}
-                  <span className="order-summary-values">{cantidad} (unidades)</span>
+                  <span className="order-summary-values">{cantidad} (Unidades)</span>
                 </p>
                 <p>
                   Est. total:{" "}
-                  <span className="order-summary-values">{total}</span>
+                  <span className="order-summary-values">$ {total}</span>
                 </p>
 
                 <hr />
