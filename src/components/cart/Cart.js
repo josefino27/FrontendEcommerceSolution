@@ -45,7 +45,7 @@ const Cart = () => {
                     <div className="row">
                       <div className="col-4 col-lg-3">
                         <img
-                          src={item.imagen}
+                          src={item.image}
                           alt={item.producto}
                           height="90"
                           width="115"
