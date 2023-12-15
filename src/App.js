@@ -16,6 +16,7 @@ import UpdateProfile from "./components/security/UpdateProfile";
 import ForgotPassword from "./components/security/ForgotPassword";
 import NewPassword from "./components/security/NewPassword";
 import UpdatePassword from "./components/security/UpdatePassword";
+import { getShoppingCart } from "./actions/cartAction";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getCategories({}));
+    dispatch(getShoppingCart({}));
 
     if(token)
     {

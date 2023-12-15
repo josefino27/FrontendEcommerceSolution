@@ -7,6 +7,7 @@ import { logout } from "../../slices/securitySlice";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  const { shoppinCartItems } = useSelector((state) => state.cart);
   const { user, loading } = useSelector((state) => state.security);
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -21,7 +22,9 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <img src="/images/PNGEmotifit (1).png" />
+            <Link to="/">
+              <img src="/images/PNGEmotifit (1).png" />
+            </Link>
           </div>
         </div>
 
@@ -34,7 +37,7 @@ const Header = () => {
             Cart
           </span>
           <span className="ml-1" id="cart_count">
-            2
+            {shoppinCartItems.length}
           </span>
 
           {user ? (
@@ -81,15 +84,11 @@ const Header = () => {
               </div>
             </div>
           ) : (
-            
-            !loading &&
-            (
-            <Link className="btn ml-4" id="login_btn" to="/login">
-              Login
-            </Link>
+            !loading && (
+              <Link className="btn ml-4" id="login_btn" to="/login">
+                Login
+              </Link>
             )
-
-
           )}
         </div>
       </nav>
