@@ -64,6 +64,16 @@ const Cart = () => {
 
     }
 
+    const checkoutHandler = () => {
+
+      if (isAuthenticated)
+      {
+        navigate("/shipping");
+      }else{
+        navigate("/login?redirect=shipping");
+      }
+
+    }
 
   return (
     <Fragment>
@@ -142,7 +152,7 @@ const Cart = () => {
                 </p>
 
                 <hr />
-                <button id="checkout_btn" className="btn btn-primary btn-block">
+                <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkoutHandler}>
                   Check out
                 </button>
               </div>

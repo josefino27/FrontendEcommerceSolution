@@ -18,6 +18,8 @@ import NewPassword from "./components/security/NewPassword";
 import UpdatePassword from "./components/security/UpdatePassword";
 import { getShoppingCart } from "./actions/cartAction";
 import Cart from "./components/cart/Cart";
+import { getCountries } from "./actions/countryAction";
+import Shipping from "./components/cart/Shipping";
 
 function App() {
 
@@ -29,6 +31,7 @@ function App() {
   useEffect(() => {
     dispatch(getCategories({}));
     dispatch(getShoppingCart({}));
+    dispatch(getCountries({}));
 
     if(token)
     {
@@ -64,6 +67,10 @@ function App() {
 
               <Route exact path="/password/update" element={<ProtectedRoute />}>
                 <Route path="/password/update" element={<UpdatePassword />} />
+              </Route>
+
+              <Route exact path="/shipping" element={<ProtectedRoute />}>
+                <Route path="/shipping" element={<Shipping />} />
               </Route>
 
             </Routes>

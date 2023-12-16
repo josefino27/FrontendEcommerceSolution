@@ -7,6 +7,7 @@ import { securityReducer } from "./slices/securitySlice";
 import { forgotPasswordReducer } from "./slices/forgotPasswordSlice";
 import { resetPasswordReducer } from "./slices/resetPasswordSlice";
 import { cartReducer } from "./slices/cartSlice";
+import { countryReducer } from "./slices/countrySlice";
 
 export default configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export default configureStore({
         security: securityReducer,
         forgotPassword: forgotPasswordReducer,
         resetPassword: resetPasswordReducer,
-        cart: cartReducer
+        cart: cartReducer,
+        country: countryReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false})
 })
