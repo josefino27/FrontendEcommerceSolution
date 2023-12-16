@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {resetUpdateStatus} from '../../slices/securitySlice';
 import { saveAddressInfo } from "../../actions/cartAction";
+import CheckoutSteps from "./CheckoutSteps";
 
 const Shipping = () => {
     const alert = useAlert();
@@ -24,9 +25,9 @@ const Shipping = () => {
         if(isUpdated)
         {
             //navege hacia la siguiente pasarela de pago - order confirm
-            // navigate("/order/confirm");
+            navigate("/order/confirm");
             dispatch(resetUpdateStatus({}))
-            alert.success("Se almaceno la direccion de envio");
+            //alert.success("Se almaceno la direccion de envio");
         }
 
         if(errores)
@@ -35,7 +36,7 @@ const Shipping = () => {
         }
 
 
-    }, [dispatch, errores, alert, isUpdated]);
+    }, [dispatch, errores, alert, isUpdated, navigate]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -55,7 +56,8 @@ const Shipping = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Informacion de Envio"}/>
+      <MetaData titulo={"Informacion de Envio"}/>
+      <CheckoutSteps envio />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
