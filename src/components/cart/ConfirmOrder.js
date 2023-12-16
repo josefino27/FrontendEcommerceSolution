@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Fragment } from "react";
 import MetaData from "../layout/MetaData";
-import CheckoutSteps from "./CheckoutSteps";
+import { CheckoutSteps } from "./CheckoutSteps";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useAlert } from "react-alert";
+import { useEffect } from "react";
 import { resetUpdateStatus } from "../../slices/orderSlice";
+import { useAlert } from "react-alert";
 import { saveOrder } from "../../actions/orderAction";
 
 const ConfirmOrder = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert();
   const {
     shoppingCartItems,
     shoppingCartId,
@@ -30,7 +31,8 @@ const ConfirmOrder = () => {
 
   useEffect(() => {
     if (isUpdated) {
-      //navigate('/payment');
+      //navegar hacia el siguiente step
+      // navigate('/payment')
       alert.success("Se creo la orden de compra");
       dispatch(resetUpdateStatus({}));
     }
@@ -40,25 +42,27 @@ const ConfirmOrder = () => {
     }
   }, [dispatch, isUpdated, errores]);
 
-  const submitHandler = () => {
+  const handlerSubmit = () => {
     const request = {
       shoppingCartId,
     };
+
     dispatch(saveOrder(request));
   };
 
   return (
     <Fragment>
-      <MetaData titulo={"Confirmacion de Orden"} />
+      <MetaData titulo="Confirmacion de Orden" />
       <CheckoutSteps envio confirmarOrden />
+
       <div className="row d-flex justify-content-between">
         <div className="col-12 col-lg-8 mt-5 order-confirm">
           <h4 className="mb-3">Informacion de Envio</h4>
           <p>
-            <b>Nombre:</b> {user.nombre}
+            <b>Nombre:</b> {user.nombre + " " + user.apellido}
           </p>
           <p className="mb-4">
-            <b>Direccion: </b>
+            <b>Direccion:</b>
             {(direccionEnvio ? direccionEnvio.direccion : "") +
               ", " +
               (direccionEnvio ? direccionEnvio.ciudad : "") +
@@ -72,6 +76,7 @@ const ConfirmOrder = () => {
 
           <hr />
           <h4 className="mt-4">Tu Carrito de Compras:</h4>
+
           {shoppingCartItems.map((item) => (
             <Fragment key={item.id}>
               <hr />
@@ -80,14 +85,16 @@ const ConfirmOrder = () => {
                   <div className="col-4 col-lg-2">
                     <img
                       src={item.imagen}
-                      alt={item.nombre}
+                      alt={item.producto}
                       height="45"
                       width="65"
                     />
                   </div>
 
                   <div className="col-5 col-lg-6">
-                    <Link to={`/product/${item.productId}`}>{item.producto}</Link>
+                    <Link to={`/product/${item.productId}`}>
+                        {item.producto}
+                    </Link>
                   </div>
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
@@ -104,7 +111,7 @@ const ConfirmOrder = () => {
 
         <div className="col-12 col-lg-3 my-4">
           <div id="order_summary">
-            <h4>Orden de Compra</h4>
+            <h4>Order de Compra</h4>
             <hr />
             <p>
               Subtotal: <span className="order-summary-values">${subtotal}</span>
@@ -123,7 +130,7 @@ const ConfirmOrder = () => {
             </p>
 
             <hr />
-            <button id="checkout_btn" className="btn btn-primary btn-block" onClick={submitHandler}>
+            <button id="checkout_btn" className="btn btn-primary btn-block" onClick={handlerSubmit}>
               Pagar Productos
             </button>
           </div>
