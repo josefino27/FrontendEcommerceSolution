@@ -21,6 +21,8 @@ import Cart from "./components/cart/Cart";
 import { getCountries } from "./actions/countryAction";
 import Shipping from "./components/cart/Shipping";
 import ConfirmOrder from "./components/cart/ConfirmOrder";
+import Payment from "./components/cart/Payment";
+import OrderSuccess from "./components/cart/OrderSuccess";
 
 function App() {
 
@@ -76,6 +78,14 @@ function App() {
 
               <Route exact path="/order/confirm" element={<ProtectedRoute />}>
                 <Route path="/order/confirm" element={<ConfirmOrder />} />
+              </Route>
+
+              <Route exact path="/payment" element={<ProtectedRoute />}>
+                <Route path="/payment" element={<Payment />} />
+              </Route>
+
+              <Route exact path="/success" element={<ProtectedRoute />}>
+                <Route path="/success" element={<OrderSuccess />} />
               </Route>
 
             </Routes>

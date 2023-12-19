@@ -39,7 +39,7 @@ export const orderSlice = createSlice({
         [saveOrder.rejected]: (state, action) => {
             state.message = null;
             state.errores = action.payload;
-            state.loading = true;
+            state.loading = false;
         },
     }
 

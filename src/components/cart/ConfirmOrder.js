@@ -32,7 +32,7 @@ const ConfirmOrder = () => {
   useEffect(() => {
     if (isUpdated) {
       //navegar hacia el siguiente step
-      // navigate('/payment')
+      navigate('/payment')
       alert.success("Se creo la orden de compra");
       dispatch(resetUpdateStatus({}));
     }

@@ -4,6 +4,7 @@ import {
   getShoppingCart,
   removeItemShoppingCart,
 } from "../actions/cartAction";
+import { confirmPayment } from "../actions/orderAction";
 
 const initialState = {
   shoppingCartId: "",
@@ -78,6 +79,25 @@ export const cartSlice = createSlice({
       state.precioEnvio = payload.precioEnvio;
     },
     [removeItemShoppingCart.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    [confirmPayment.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [confirmPayment.fulfilled]: (state, { payload }) => {
+      state.shoppingCartItems = [];
+      state.loading = false;
+      state.error = null;
+      state.total = 0;
+      state.cantidad = 0;
+      state.subtotal = 0;
+      state.impuesto = 0;
+      state.precioEnvio = 0;
+    },
+    [confirmPayment.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
