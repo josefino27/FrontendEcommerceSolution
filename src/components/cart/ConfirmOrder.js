@@ -25,14 +25,15 @@ const ConfirmOrder = () => {
 
   const items = shoppingCartItems.slice();
 
-  const { isUpdated, errores } = useSelector((state) => state.order);
+  const { isUpdated, errores, clientSecret } = useSelector((state) => state.order);
+  
 
   const { user, direccionEnvio } = useSelector((state) => state.security);
 
   useEffect(() => {
     if (isUpdated) {
       //navegar hacia el siguiente step
-      navigate('/payment')
+      window.location.href = clientSecret;
       alert.success("Se creo la orden de compra");
       dispatch(resetUpdateStatus({}));
     }
