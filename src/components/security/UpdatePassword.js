@@ -46,7 +46,7 @@ const UpdatePassword = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Actualizar Password"} />
+      <MetaData titulo={"Actualizar Password"} />
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler} >

@@ -10,7 +10,7 @@ export const CheckoutSteps = ({ envio, confirmarOrden, payment}) => {
 
             {
                 envio ? 
-                    <Link to="shipping" className="float-right">
+                    <Link to="/shipping" className="float-right">
                         <div className="triangle2-active"></div>
                         <div className="step active-step">Envio</div>
                         <div className="triangle-active"></div>

@@ -5,7 +5,7 @@ import MetaData from "../layout/MetaData";
 import { addItemShoppingCart, removeItemShoppingCart } from "../../actions/cartAction";
 
 const Cart = () => {
-  const { shoppingCartItems, shoppingCartId, total, cantidad } = useSelector(
+  const { shoppingCartItems, shoppingCartId, total, cantidad, subtotal } = useSelector(
     (state) => state.cart
   );
   const { isAuthenticated } = useSelector((state) => state.security);
@@ -77,7 +77,7 @@ const Cart = () => {
 
   return (
     <Fragment>
-      <MetaData title={"Tu Carrito de Compras"} />
+      <MetaData titulo={"Tu Carrito de Compras"} />
 
       {shoppingCartItems.length === 0 ? (
         <h2 className="mt-5">Tu Carrito de Compras esta vacio</h2>
@@ -140,15 +140,15 @@ const Cart = () => {
 
             <div className="col-12 col-lg-3 my-4">
               <div id="order_summary">
-                <h4>Order de Compra</h4>
+                <h4>Orden de Compra</h4>
                 <hr />
                 <p>
-                  Subtotal:{" "}
+                  Cantidad:{" "}
                   <span className="order-summary-values">{cantidad} (Unidades)</span>
                 </p>
                 <p>
                   Est. total:{" "}
-                  <span className="order-summary-values">$ {total}</span>
+                  <span className="order-summary-values">$ {subtotal}</span>
                 </p>
 
                 <hr />

@@ -25,8 +25,9 @@ const ConfirmOrder = () => {
 
   const items = shoppingCartItems.slice();
 
-  const { isUpdated, errores, clientSecret } = useSelector((state) => state.order);
-  
+  const { isUpdated, errores, clientSecret } = useSelector(
+    (state) => state.order
+  );
 
   const { user, direccionEnvio } = useSelector((state) => state.security);
 
@@ -59,9 +60,17 @@ const ConfirmOrder = () => {
       <div className="row d-flex justify-content-between">
         <div className="col-12 col-lg-8 mt-5 order-confirm">
           <h4 className="mb-3">Informacion de Envio</h4>
-          <p>
-            <b>Nombre:</b> {user.nombre + " " + user.apellido}
-          </p>
+          {user ? (
+            <p>
+              <b>Nombre:</b> {user.nombre + " " + user.apellido}
+            </p>
+          ) : (
+            <p>
+              {" "}
+              <b>Nombre:</b>{" "}
+            </p>
+          )}
+
           <p className="mb-4">
             <b>Direccion:</b>
             {(direccionEnvio ? direccionEnvio.direccion : "") +
@@ -94,13 +103,14 @@ const ConfirmOrder = () => {
 
                   <div className="col-5 col-lg-6">
                     <Link to={`/product/${item.productId}`}>
-                        {item.producto}
+                      {item.producto}
                     </Link>
                   </div>
 
                   <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                     <p>
-                      {item.cantidad} x ${item.precio} = <b>${item.totalLine}</b>
+                      {item.cantidad} x ${item.precio} ={" "}
+                      <b>${item.totalLine}</b>
                     </p>
                   </div>
                 </div>
@@ -112,26 +122,30 @@ const ConfirmOrder = () => {
 
         <div className="col-12 col-lg-3 my-4">
           <div id="order_summary">
-            <h4>Order de Compra</h4>
+            <h4>Orden de Compra</h4>
             <hr />
             <p>
-              Subtotal: <span className="order-summary-values">${subtotal}</span>
+              Total: <span className="order-summary-values">${subtotal}</span>
             </p>
-            <p>
+            {/* <p>
               Precio de Envio: <span className="order-summary-values">${precioEnvio}</span>
-            </p>
-            <p>
+            </p> */}
+            {/* <p>
               Impuesto: <span className="order-summary-values">${impuesto}</span>
-            </p>
+            </p> */}
 
             <hr />
 
-            <p>
+            {/* <p>
               Total: <span className="order-summary-values">${total}</span>
-            </p>
+            </p> */}
 
             <hr />
-            <button id="checkout_btn" className="btn btn-primary btn-block" onClick={handlerSubmit}>
+            <button
+              id="checkout_btn"
+              className="btn btn-primary btn-block"
+              onClick={handlerSubmit}
+            >
               Pagar Productos
             </button>
           </div>
